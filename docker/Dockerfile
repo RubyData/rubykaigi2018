@@ -1,0 +1,1 @@
+FROM rubydata/notebooks:latest

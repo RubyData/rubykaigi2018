@@ -28,7 +28,7 @@ namespace :docker do
     end
 
     def docker_run(*args)
-      port = ['-p', ENV['port']] if ENV['port']
+      port = ['-p', "#{ENV['port']}:#{ENV['port']}"] if ENV['port']
 
       volume = ['-v', normalize_volume(ENV['volume'])] if ENV['volume']
 
@@ -38,7 +38,12 @@ namespace :docker do
 
     def docker_run_jupyter(app)
       ENV['port'] ||= '8888'
-      ENV['JUPYTER_ENABLE_LAB'] = (app == :lab) ? 1 : nil
+      case app
+      when :notebook
+        ENV['ENABLE_JUPYTER_LAB'] = nil
+      when :lab
+        ENV['ENABLE_JUPYTER_LAB'] = '1'
+      end
       docker_run("start-notebook.sh", "--port=#{ENV['port']}")
     end
 

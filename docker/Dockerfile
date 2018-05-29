@@ -3,6 +3,11 @@ FROM rubydata/notebooks:latest
 USER root
 
 RUN apt-get update && apt-get install -y --no-install-recommends unzip
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+    apt-get update && apt-get install -y --no-install-recommends nodejs
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y --no-install-recommends yarn
 RUN chown -R $NB_USER $GEM_HOME
 
 USER $NB_USER
@@ -35,3 +40,8 @@ RUN git clone https://github.com/RubyData/wine_data_viewer.git $HOME/wine_data_v
     cd wine_data_viewer && \
     bundle install && \
     rake db:create db:migrate db:seed
+
+RUN git clone https://github.com/hatappi/rails-red-chainer $HOME/rails-red-chainer && \
+    cd rails-red-chainer && \
+    bundle install && \
+    yarn install

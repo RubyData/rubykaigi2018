@@ -1,19 +1,11 @@
 # RubyData Sendai Workshop in RubyKaigi 2018
 
-## Pull image
+Run the following commands.
 
-```console
-rake docker:pull
+```
+git clone https://github.com/RubyData/rubykaigi2018.git
+cd rubykaigi2018
+rake docker:run:notebook volume=.:/home/jovyan/rubykaigi2018
 ```
 
-## Run Jupyter Notebook in the container
-
-```console
-rake docker:run:notebook
-```
-
-## Run shell in the container
-
-```console
-rake docker:run:bash
-```
+Then open <http://localhost:8888/?token=rubykaigi2018>.

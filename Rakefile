@@ -44,7 +44,10 @@ namespace :docker do
       when :lab
         ENV['ENABLE_JUPYTER_LAB'] = '1'
       end
-      docker_run("start-notebook.sh", "--port=#{ENV['port']}")
+      docker_run("start-notebook.sh",
+                 "--port=#{ENV['port']}",
+                 "--NotebookApp.token=rubykaigi2018"
+                )
     end
 
     desc "Run jupyter notebook on docker"
